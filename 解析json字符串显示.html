@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 399px;
+            border: 1px solid #000;
+        }
+    </style>
+</head> 
+<body>
+    <div id="box" class="box">
+        
+    </div>
+    <div onclick="btnClick()">点击查看样式1</div>
+    <div onclick="btnClick1()">点击样式2</div>
+    <script src="http://code.jquery.com/jquery-1.7.2.js "></script>
+    <script>
+        var box = document.getElementById('box')
+        var str = "<p>你好呀</p>"
+        box.innerHTML = str
+        var api = 'http://www.hitinga.com/newsTypeDetail/getList?page=1&pageSize=20&newsTypeId=1'
+        $.ajax({  
+            url : api, 
+            dataType: 'Json',
+            type : "get",
+            success : function(result) {
+                console.log(result.msg.records[0].details)
+                box.innerHTML = result.msg.records[0].details
+            }  
+        });
+        function btnClick() {
+            console.log('点击开始了')
+            setStyle('box', 500, 'width')
+        }
+        function btnClick1() {
+            console.log('点击开始了')
+            setStyle('box', 800, 'height')
+        }
+        function setStyle(dom, value, params) {
+            try {
+                console.log(dom, value, params)
+                Array.prototype.slice.call(document.getElementsByClassName(dom)).forEach( item => {
+                    item.style[params] = value + 'px'
+                })
+            } catch (err) {
+                console.log('出错了')
+                console.log(err)
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+    <script>
+        $.ajax({
+            url: 'http://t_new.yunfanfamily.com/api/web/index?source=wechat',
+            type:'GET',
+            contentType: "application/json",
+            dataType: 'jsonp',
+            data: {},
+            jsonpCallback: 'success_jsonpCallback',
+            success: function(res) {
+                console.log(res)
+            }
+        })
+    </script>
+</body>
+</html>

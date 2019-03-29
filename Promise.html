@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        console.dir(Promise)
+        //没有回调，立即执行
+            // var p = new Promise(function (resolve,reject) {
+            //     setTimeout(function () {
+            //         console.log('nihk');
+            //         resolve('haha')  //resolve是成功后的回调函数，里面的值是传入的参数
+            //     },3000)
+            // })
+            // p.then(function() {
+            //     console.log(arguments)
+            // })
+
+        //嵌套函数中 避免立即执行 异步回调，回调函数写在then里面
+            // p.then(function(data){
+            //     console.log(data)
+            // })
+
+            // function init() {
+            //     var p = new Promise(function(resolve, reject) {
+            //         setTimeout(function() {
+            //             console.log('开始');
+            //             resolve('你好')
+            //         },2000)
+            //     })
+            //     return p
+            // }
+
+            // init().then(function(data) {
+            //     console.log(data)
+            // })
+
+        //链式操作 promise精髓在于链识操作，传递状态
+            function init1() {
+                var p = new Promise(function(resolve, reject) {
+                    setTimeout(function() {
+                        console.log('init1执行完毕')
+                        resolve('init1')
+                    },4000)
+                })
+                return p
+            }
+
+            function init2() {
+                var p = new Promise(function( resolve, reject) {
+                    setTimeout(function(){
+                        console.log('init2执行完毕')
+                        resolve('init2')
+                    },6000)
+                })
+                return p
+            }                
+
+            function init3() {
+                var p = new Promise(function(resolve, reject) {
+                    setTimeout(function(){
+                        console.log('init3执行完毕')
+                        resolve('init3')
+                    },2000)
+                })
+                return p
+            }
+
+            init1().then(function(data) {
+                console.log(data);
+                return init2();
+            }).then(function(data) {
+                console.log(data);
+                return '返回的数据'
+            }).then(function(data){
+                console.log(data)
+            })
+        //reject的用法
+            // function init1(){
+            //     var p = new Promise(function(resolve, reject){
+            //         setTimeout(function(){
+            //             var num = Math.ceil(Math.random()*10);
+            //             if (num <= 9) {
+            //                 resolve(num);
+            //             } else {
+            //                 reject('数字太大了')
+            //             }
+            //         },2000)
+            //     })
+            //     return p
+            // }
+
+            // // init1().then(function(data) {
+            // //     console.log(data)
+            // // },function(reason, data){
+            // //     console.log(reason)
+            // //     console.log(data)
+            // // })
+            // //catch的用法
+            // init1().then(function(data) {
+            //     console.log(data)
+            // }).catch(function(data){
+            //     console.log(data)
+            // })
+        //all方法的使用
+            // Promise.all([init1(),init2(),init3()]).then(function(results){
+            //     console.log(results)
+            // })
+        //race方法的使用
+            // Promise.race([init1(),init2(),init3()]).then(function(result){
+            //     console.log(result)
+            // })
+    </script>
+</body>
+</html>

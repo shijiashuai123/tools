@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input id="file" name="myfile" type="file">
+        <input type="button" onclick="UpladFile()" value="上传">
+        <progress id="progressBar" value="0" max="100"> </progress>
+    </div>
+    <script>
+        function UpladFile() {
+            var fileObj = document.getElementById("file").files[0]; // 获取文件对象
+            var url = "http://manager.itinga.cn/uploadFile/file";                    // 接收上传文件的后台地址 
+            // FormData 对象
+            var form = new FormData();
+            form.append("file", fileObj); 
+            form.append('distName', 'manager')                          // 文件对象
+            form.append('fileName', 'protal')                      // 文件对象
+            form.append('time', Date.parse(new Date()) + 1000 * 60 * 60 * 24 * 9999)                          // 文件对象
+            var xhr = new XMLHttpRequest();
+
+            xhr.open("post", url, true);
+
+            xhr.onload = function () {
+                alert("上传完成!");
+            };
+            xhr.upload.addEventListener("progress", progressFunction, false)
+            xhr.send(form);
+        }
+        function progressFunction(evt) {
+            console.log(evt)
+            var progressBar = document.getElementById("progressBar");
+            if (evt.lengthComputable) {
+                progressBar.max = evt.total;    
+                progressBar.value = evt.loaded;
+            }
+        }
+    </script>
+</body>
+</html>

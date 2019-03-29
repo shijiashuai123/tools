@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>设配列表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;   
+        }
+        ul,li {
+            list-style: none;
+        }
+        .listBox {
+            padding: 30px;
+            border: 1px solid #000;
+        }
+        li {
+            width: 400px;
+            height: 50px;
+            line-height: 50px;
+            background-color: aquamarine;
+            border: 1px solid #000;
+            margin: 10px;
+            /* cursor: move; */
+        }
+        li .deviceId {
+            margin: 0px 20px;
+        }
+        h2 {
+            user-select: none;
+        }
+        body.dragging, body.dragging * {
+            cursor: move !important;
+        }
+        .dragged {
+        position: absolute;
+        opacity: 0.5;
+        z-index: 2000;
+        }
+        ol.example li.placeholder {
+            position: relative;
+        /** More li styles **/
+        }
+        ol.example li.placeholder:before {
+            position: absolute;
+        /** Define arrowhead **/
+        }
+    </style>
+</head>
+<body>
+    <h2 class="h2list" draggable='true' style="font-size:30px; text-align:center; margin-top: 20px;">设配列表</h2>
+    <ol class="listBox example">
+      
+    </ol>
+    <script src="http://code.jquery.com/jquery-1.7.2.js "></script>
+    <script src="js/jquery-sortable.js"></script>
+    <script>
+        // 拖拽
+        const api = 'http://music.itinga.cn/manager/getLocalRankList'
+        // const openId = Vue.cookie.get('OPENID')
+        // const openId = getCookie(OPENID)
+        var arrList = []
+        $.ajax({  
+            url : api, 
+            dataType: 'Json',
+            type : "get",
+            success : function(result) {
+            //   groupList = result
+              responseData(result)
+                arrList = result.lists
+            }  
+        });
+        
+        function responseData(item) {
+            console.log(item.lists)
+            var showData = "<li class='deviceList' draggable='true'><span class='deviceName'></span><span class='deviceId'></span><span class='resource'></span></li>"
+            for(var i = 0; i < item.lists.length; i++){
+                $('.listBox').append(showData)
+                $('.deviceName').eq(i).text(item.lists[i].id)
+                $('.deviceId').eq(i).text(item.lists[i].rankName)
+                $('.resource').eq(i).text(item.lists[i].resource)
+            }
+        }
+    	$(function  () {
+            $("ol.example").sortable()
+        })
+        
+        // var str = localStorage.getItem("deviceId")
+
+    </script>
+</body>
+</html>

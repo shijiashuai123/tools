@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <audio id="audio" src="" autoplay loop></audio>
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script>
+        $.ajax({
+            url: 'http://music.itinga.cn/music/electSongs/getListByPage',
+            method: 'get',
+            data: {
+                size: 20,
+                current: 1
+            },
+            dataType: 'json',
+            success: function(res) {
+                console.log(res)
+                data(res)
+            }
+        })
+
+        function data(res) {
+            res.lists.forEach( item => {
+                playList.push(item.songUrl)
+            })
+            console.log(playList)
+            play()
+        }
+
+        var playList = []
+        var audio = $("#audio")[0];
+        var len = playList.length
+
+        function play() {
+            Promise.all(playList.map( item => {
+                
+            }))
+        }
+        
+        function init() {
+            var p = new Promise( (res, rej) => {
+                for (var i = 0; i < len; i++) {
+                    audio = playList[i]
+                }
+                res('nihk')
+            })
+            return p
+        }
+    </script>
+</body>
+</html>

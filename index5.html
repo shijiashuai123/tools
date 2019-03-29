@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul ,li {
+            list-style: none;
+        }
+        li {
+            width: 200px;
+            height: 200px;
+            background-color: aqua;
+            border: 1px solid #000;
+        }
+        .active {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <ul class="ulList">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script>    
+        var len = $('.ulList>li').length
+        console.log(len)
+            for (var i = 0; i < len; i++) {
+                $(".ulList>li").eq(i).addClass('active')
+            }
+    </script>
+</body>
+</html>

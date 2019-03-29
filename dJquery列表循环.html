@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        .deviceList {
+            width: 400px;
+            height: 80px;
+            border: 1px solid #aaa;
+        }
+
+        .songImg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .box {
+            /* width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            background-color: blue; */
+            width: 0px;
+            height: 0px;
+            border-bottom: 75px solid #000;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            transform: rotate(90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+
+    </div>
+    <ul class="listBox">
+
+    </ul>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+        $.ajax({
+            dataType: 'json',
+            type: "GET",
+            url: `http://music.itinga.cn/api/get/singerList`,
+            data: {
+                sign: 1,
+                page: 1,
+                pageSize: 20
+            },
+            success: function (result) {
+                responseData(result)
+            }
+        });
+
+        function responseData(item) {
+            var item = item.data.lists
+            console.log(item)
+            var showData =
+                `<li class='deviceList'>
+                    <img class='songImg' src='' alt=''>
+                    <span class='singerName'></span>
+                    <span class='singerId'></span>
+                    <input class="input_value"/>
+                </li>`
+            for (var i = 0; i < item.length; i++) {
+                $('.listBox').append(showData)
+                $('.singerName').eq(i).text(item[i].singerName)
+                $('.singerId').eq(i).text(item[i].singerId)
+                $('.songImg').eq(i).attr('src', item[i].singerImage)
+                // 加上input
+                $('.input_value').eq(i).attr('value', item[i].singerName)
+            }
+        }
+    </script>
+</body>
+
+</html>
